@@ -1,7 +1,7 @@
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMake, CMakeToolchain
-from conan.tools.files import collect_libs, copy, download, get, rmdir, rm
+from conan.tools.files import collect_libs, copy, download, get, rmdir, rm, rename
 from conan.tools.apple import fix_apple_shared_install_name
 
 
@@ -39,6 +39,8 @@ class Gurobi(ConanFile):
         if self.settings.os == "Linux":
             get(self, **self.conan_data["sources"][self.version][str(self.settings.os)], destination=build_folder)
             content_dir = f"{build_folder}/{version_no_dots}/linux64"
+            rm(self, pattern=self._get_shared_lib_name(), folder=f"{content_dir}/lib")
+            rename(self, src=f"{content_dir}/lib/libgurobi.so.{self.version}", dst=f"{content_dir}/lib/{self._get_shared_lib_name()}")
         else:
             download(self, **self.conan_data["sources"][self.version][str(self.settings.os)], filename="grb")
             self.run(f"pkgutil --expand-full grb {build_folder}")
