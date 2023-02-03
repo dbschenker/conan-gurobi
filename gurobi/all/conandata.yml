@@ -1,4 +1,11 @@
 sources:
+  "10.0.1":
+    Linux:
+      url: "https://packages.gurobi.com/10.0/gurobi10.0.1_linux64.tar.gz"
+      sha256: "a0b551156df2c94107b3428cae278716a0a6c913f63ac132573852b9725b6c59"
+    Macos:
+      url: "https://packages.gurobi.com/10.0/gurobi10.0.1_macos_universal2.pkg"
+      sha256: "080974344e1d98bae73fa223b5570715c46ed27a8278f7b5eb2e15bb5f240ef4"
   "10.0.0":
     Linux:
       url: "https://packages.gurobi.com/10.0/gurobi10.0.0_linux64.tar.gz"
