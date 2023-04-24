@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.18)
 project(GurobiSelfCompiled CXX)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 file(GLOB SRC src/*.cpp)
 add_library(gurobi_c++ STATIC ${SRC})
 target_include_directories(gurobi_c++ PRIVATE include)
