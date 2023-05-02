@@ -47,6 +47,11 @@ jobs:
           conan config install https://github.com/conan-io/hooks.git -sf hooks -tf hooks
           conan config set hooks.conan-center
       - name: Build and Test v10.0.0
+        env:
+          GRB_APP_NAME: ${{ secrets.GRB_APP_NAME }}
+          GRB_CLIENT_NAME: ${{ secrets.GRB_CLIENT_NAME }}
+          GRB_EXP_DATE: ${{ secrets.GRB_EXP_DATE }}
+          GRB_SECRET: ${{ secrets.GRB_SECRET }}s
         run: conan create gurobi/all/conanfile.py 10.0.0@
   test_package:
     strategy:
@@ -67,4 +72,9 @@ jobs:
       - name: Create default profile
         run: conan profile detect
       - name: Build and Test v${{ matrix.version }}
+        env:
+          GRB_APP_NAME: ${{ secrets.GRB_APP_NAME }}
+          GRB_CLIENT_NAME: ${{ secrets.GRB_CLIENT_NAME }}
+          GRB_EXP_DATE: ${{ secrets.sGRB_EXP_DATE }}
+          GRB_SECRET: ${{ secrets.GRB_SECRET }}
         run: conan create gurobi/all/conanfile.py --version ${{ matrix.version }}
