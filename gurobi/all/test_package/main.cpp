@@ -5,15 +5,21 @@ using namespace std;
 
 int main()
 {
-    const char* envAppName = std::getenv("GRB_APP_NAME");
-    const char* envClientName = std::getenv("GRB_CLIENT_NAME");
-    const char* envExpDate = std::getenv("GRB_EXP_DATE");
-    const char* envSecret = std::getenv("GRB_SECRET");
+    const char* envAppName = getenv("GRB_APP_NAME");
+    const char* envClientName = getenv("GRB_CLIENT_NAME");
+    const char* envExpDate = getenv("GRB_EXP_DATE");
+    const char* envSecret = getenv("GRB_SECRET");
     bool haveCIVars { envAppName && envClientName && envExpDate && envSecret };
 
     GRBEnv env(haveCIVars);
     if (haveCIVars) {
-        // todo env.set()
+        env.set(GRB_IntParam_OutputFlag, 0);
+        env.set("GURO_PAR_ISVNAME", envClientName);
+        env.set("GURO_PAR_ISVAPPNAME", envAppName);
+        env.set("GURO_PAR_ISVEXPIRATION", envExpDate);
+        env.set("GURO_PAR_ISVKEY", envSecret);
+        env.start();
+        env.set(GRB_IntParam_OutputFlag, 1);
     }
     GRBModel model { env };
 
