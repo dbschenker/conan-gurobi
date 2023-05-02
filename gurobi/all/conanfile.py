@@ -1,7 +1,7 @@
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMake, CMakeToolchain
-from conan.tools.files import collect_libs, copy, download, get, rmdir, rm, rename
+from conan.tools.files import copy, download, get, rmdir, rm, rename
 from conan.tools.apple import fix_apple_shared_install_name
 from os.path import join
 
