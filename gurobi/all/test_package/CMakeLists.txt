@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 project(test_package CXX)
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_VERBOSE_MAKEFILE ON)
 
 find_package(gurobi REQUIRED CONFIG)
 add_executable(${PROJECT_NAME} main.cpp)
