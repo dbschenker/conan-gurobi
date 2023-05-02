@@ -75,6 +75,6 @@ jobs:
         env:
           GRB_APP_NAME: ${{ secrets.GRB_APP_NAME }}
           GRB_CLIENT_NAME: ${{ secrets.GRB_CLIENT_NAME }}
-          GRB_EXP_DATE: ${{ secrets.sGRB_EXP_DATE }}
+          GRB_EXP_DATE: ${{ secrets.GRB_EXP_DATE }}
           GRB_SECRET: ${{ secrets.GRB_SECRET }}
         run: conan create gurobi/all/conanfile.py --version ${{ matrix.version }}

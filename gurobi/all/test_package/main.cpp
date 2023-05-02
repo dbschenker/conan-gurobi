@@ -6,13 +6,9 @@ using namespace std;
 int main()
 {
     const char* envAppName = getenv("GRB_APP_NAME");
-    if (envAppName) cout << "GRB_APP_NAME found" << endl;
     const char* envClientName = getenv("GRB_CLIENT_NAME");
-    if (envClientName) cout << "GRB_CLIENT_NAME found" << endl;
     const char* envExpDate = getenv("GRB_EXP_DATE");
-    if (envExpDate) cout << "GRB_EXP_DATE found" << endl;
     const char* envSecret = getenv("GRB_SECRET");
-    if (envSecret) cout << "GRB_SECRET found" << endl;
     bool haveCIVars { envAppName && envClientName && envExpDate && envSecret };
 
     bool objectiveValueIsFour { false };
