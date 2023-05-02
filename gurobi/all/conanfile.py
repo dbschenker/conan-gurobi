@@ -79,6 +79,6 @@ class Gurobi(ConanFile):
 
     def package_info(self):
         self.cpp_info.libsdirs = ["lib"]
-        self.cpp_info.libs = collect_libs(self)
+        self.cpp_info.libs = [self._get_shared_lib_name(), "gurobi_c++"]
         if self.settings.os == "Linux":
             self.cpp_info.system_libs.extend(["dl", "m", "pthread", "rt"])
