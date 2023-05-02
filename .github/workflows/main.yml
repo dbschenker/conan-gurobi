@@ -51,7 +51,7 @@ jobs:
           GRB_APP_NAME: ${{ secrets.GRB_APP_NAME }}
           GRB_CLIENT_NAME: ${{ secrets.GRB_CLIENT_NAME }}
           GRB_EXP_DATE: ${{ secrets.GRB_EXP_DATE }}
-          GRB_SECRET: ${{ secrets.GRB_SECRET }}s
+          GRB_SECRET: ${{ secrets.GRB_SECRET }}
         run: conan create gurobi/all/conanfile.py 10.0.0@
   test_package:
     strategy:
