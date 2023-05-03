@@ -2,7 +2,6 @@ from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMake, CMakeToolchain
 from conan.tools.files import copy, download, get, rmdir, rm, rename
-from conan.tools.apple import fix_apple_shared_install_name
 from os.path import join
 
 
@@ -75,7 +74,6 @@ class Gurobi(ConanFile):
         copy(self, "libgurobi_c++.a", src=self.build_folder, dst=join(self.package_folder, "lib"))
         # C lib
         copy(self, self._get_shared_lib_name(), src=join(self.build_folder, "lib"), dst=join(self.package_folder, "lib"))
-        fix_apple_shared_install_name(self)  # pre-built C lib contains an absolute path
 
     def package_info(self):
         self.cpp_info.libsdirs = ["lib"]
