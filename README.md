@@ -7,7 +7,7 @@ The repository provides a recipe to package the [Gurobi solver](https://www.guro
 Within the repository root folder, run the following command (assuming you want to create the package for Gurobi version 10.0.1):
 
 ```shell
-conan create gurobi/all/conanfile.py 10.0.1@
+conan create gurobi/all/conanfile.py --version 10.0.1
 ```
 
 ## Supported Compilers and Operating Systems

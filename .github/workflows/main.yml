@@ -1,0 +1,81 @@
+name: "Build and Test Package"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  PYTHONPATH: ${{github.workspace}}/conan-center-index
+
+jobs:
+  linters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install conan~=1.0 pylint==2.14
+      - name: Download linter config
+        uses: actions/checkout@v3
+        with:
+          repository: conan-io/conan-center-index
+          path: conan-center-index
+      - name: Check recipe
+        run: pylint --rcfile=conan-center-index/linter/pylintrc_recipe gurobi/all/conanfile.py
+      - name: Check test package
+        run: pylint --rcfile=conan-center-index/linter/pylintrc_testpackage gurobi/all/test_package/conanfile.py
+  hooks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install conan~=1.0
+      - name: Enable hooks
+        run: |
+          conan config install https://github.com/conan-io/hooks.git -sf hooks -tf hooks
+          conan config set hooks.conan-center
+      - name: Build and Test v10.0.0
+        env:
+          GRB_APP_NAME: ${{ secrets.GRB_APP_NAME }}
+          GRB_CLIENT_NAME: ${{ secrets.GRB_CLIENT_NAME }}
+          GRB_EXP_DATE: ${{ secrets.GRB_EXP_DATE }}
+          GRB_SECRET: ${{ secrets.GRB_SECRET }}
+        run: conan create gurobi/all/conanfile.py 10.0.0@
+  test_package:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        version: [10.0.0, 10.0.1]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install conan
+      - name: Create default profile
+        run: conan profile detect
+      - name: Build and Test v${{ matrix.version }}
+        env:
+          GRB_APP_NAME: ${{ secrets.GRB_APP_NAME }}
+          GRB_CLIENT_NAME: ${{ secrets.GRB_CLIENT_NAME }}
+          GRB_EXP_DATE: ${{ secrets.GRB_EXP_DATE }}
+          GRB_SECRET: ${{ secrets.GRB_SECRET }}
+        run: conan create gurobi/all/conanfile.py --version ${{ matrix.version }}
