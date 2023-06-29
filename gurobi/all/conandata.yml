@@ -1,4 +1,11 @@
 sources:
+  "10.0.2":
+    Linux:
+      url: "https://packages.gurobi.com/10.0/gurobi10.0.2_linux64.tar.gz"
+      md5: "4f46fa05f0302adb9cc9751363dd6c7b"
+    Macos:
+      url: "https://packages.gurobi.com/10.0/gurobi10.0.2_macos_universal2.pkg"
+      md5: "268e5fbef47a3a250eca26e59a12058e"
   "10.0.1":
     Linux:
       url: "https://packages.gurobi.com/10.0/gurobi10.0.1_linux64.tar.gz"
