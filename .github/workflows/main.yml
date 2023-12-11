@@ -47,18 +47,18 @@ jobs:
         run: |
           conan config install https://github.com/conan-io/hooks.git -sf hooks -tf hooks
           conan config set hooks.conan-center
-      - name: Build and Test v10.0.0
+      - name: Build and Test v11.0.0
         env:
           GRB_APP_NAME: ${{ secrets.GRB_APP_NAME }}
           GRB_CLIENT_NAME: ${{ secrets.GRB_CLIENT_NAME }}
           GRB_EXP_DATE: ${{ secrets.GRB_EXP_DATE }}
           GRB_SECRET: ${{ secrets.GRB_SECRET }}
-        run: conan create gurobi/all/conanfile.py 10.0.0@
+        run: conan create gurobi/all/conanfile.py 11.0.0@
   test_package:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        version: [10.0.0, 10.0.1, 10.0.2]
+        version: [11.0.0]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
